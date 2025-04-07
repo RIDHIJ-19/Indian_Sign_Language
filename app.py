@@ -56,41 +56,47 @@ def video_feed():
  
 @app.route("/process_frame", methods=["POST"])
 def process_image():
-    """Handle the image from the frontend, process it, and return prediction."""
     data = request.get_json()
-    image_data = data['image']
+    image_data = data.get('image', '')
+
+    # 🔍 Debug: Check if image data was received
+    if not image_data:
+        print("❌ No image data received in request.")
+        return jsonify({"prediction": "No image data received"})
+
+    print("📸 Image data length:", len(image_data))
+    print("🧪 Image data preview:", image_data[:50])  # Just to check the format
 
     try:
-        # Decode the base64 image
-        img_data = base64.b64decode(image_data.split(',')[1])  # Ignore base64 header
+        if ',' in image_data:
+            header, base64_data = image_data.split(',', 1)
+        else:
+            return jsonify({"prediction": "Invalid image format"})
 
-        # Check if the decoded data is not empty
+        # Try decoding
+        img_data = base64.b64decode(base64_data)
+
         if not img_data:
             return jsonify({"prediction": "Empty image data received"})
 
-        # Convert the binary data to numpy array
+        # Convert binary to image
         img_array = np.frombuffer(img_data, dtype=np.uint8)
-
-        # Ensure the array is not empty
         if img_array.size == 0:
-            return jsonify({"prediction": "Invalid image data"})
+            return jsonify({"prediction": "Invalid image array"})
 
-        # Decode the numpy array into an image
         img = cv2.imdecode(img_array, cv2.IMREAD_COLOR)
-
-        # Check if the image is properly decoded
         if img is None:
             return jsonify({"prediction": "Failed to decode image"})
 
-        # Process the frame and get prediction
         predicted_character = process_frame(img)
         if predicted_character:
             return jsonify({"prediction": predicted_character})
         else:
             return jsonify({"prediction": "No Hand Detected"})
-    except Exception as e:
-        return jsonify({"prediction": f"Error processing image: {str(e)}"})
 
+    except Exception as e:
+        print("🚨 Error:", e)
+        return jsonify({"prediction": f"Error processing image: {str(e)}"})
 
 def generate_frames():
     """Capture video frames and make predictions in real-time."""
