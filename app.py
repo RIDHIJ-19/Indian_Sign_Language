@@ -56,8 +56,10 @@ def video_feed():
  
 @app.route("/process_frame", methods=["POST"])
 def process_image():
-    data = request.get_json()
+    data = request.get_json(force=True)
+ 
     image_data = data.get('image', '')
+    print("🧪 Image sample:", image_data[:100])
 
     # 🔍 Debug: Check if image data was received
     if not image_data:
