@@ -5,7 +5,7 @@ import os
 app = Flask(__name__)
 
 # Update this with your Gemini 1.5-compatible API Key
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or "AIzaSyCo-hF5_EUrih8vQp87ZasiwmuZ3ac8LFQ"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or "AIzaSyCo-hF5_EUrih8v LFQ"
 GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent"
 
 def call_gemini_vision(base64_image):
