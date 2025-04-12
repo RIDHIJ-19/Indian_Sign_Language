@@ -4,3 +4,4 @@ mediapipe
 scikit-learn
 gunicorn
 numpy
+requests
