@@ -24,48 +24,64 @@
     <div id="prediction">Prediction: </div>
 
     <script>
-        const videoElement = document.getElementById('webcam');
-        const startButton = document.getElementById('startButton');
-        const predictionElement = document.getElementById('prediction');
+        let videoElement = document.getElementById("webcam");  // ✅ Fixed: matches the video tag ID
+        let predictionElement = document.getElementById("prediction");
+        let capturing = false;
 
-        // Start the webcam feed
-        startButton.addEventListener('click', async () => {
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-            videoElement.srcObject = stream;
-        });
+        function startCapture() {
+            capturing = true;
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(stream => {
+                    videoElement.srcObject = stream;
+                    videoElement.play();
 
-        // Capture a frame every second and send it to the backend
+                    videoElement.onloadedmetadata = () => {
+                        // Wait for camera to be ready
+                        setTimeout(captureFrame, 1000); 
+                    };
+                })
+                .catch(err => {
+                    console.error("Camera access error:", err);
+                    predictionElement.textContent = "Camera access denied.";
+                });
+        }
+
         async function captureFrame() {
+            if (!capturing) return;
+
             const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
             canvas.width = videoElement.videoWidth;
             canvas.height = videoElement.videoHeight;
+            const context = canvas.getContext('2d');
 
             context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
             const frameData = canvas.toDataURL('image/jpeg');
 
-            // Send frame to the backend and get prediction
-            const response = await fetch('/process_frame', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ image: frameData })
-            });
-
-            const result = await response.json();
-
-            if (result.prediction) {
-                predictionElement.textContent = "Prediction: " + result.prediction;
-            } else if (result.error) {
-                predictionElement.textContent = "Error: " + result.error;
+            if (!frameData || frameData.length < 100) {
+                console.error("⚠️ Frame capture failed.");
+                predictionElement.textContent = "Frame capture failed.";
+                setTimeout(captureFrame, 1000);
+                return;
             }
 
-            setTimeout(captureFrame, 1000); // Capture every second
+            try {
+                const response = await fetch('/process_frame', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ image: frameData })
+                });
+
+                const result = await response.json();
+                predictionElement.textContent = "Prediction: " + result.prediction;
+            } catch (err) {
+                console.error("Error sending frame:", err);
+                predictionElement.textContent = "Network error.";
+            }
+
+            setTimeout(captureFrame, 1000); // Loop every second
         }
 
-        // Start capturing frames
-        captureFrame();
+        document.getElementById("startButton").addEventListener("click", startCapture);  // ✅ Fixed: button ID
     </script>
 </body>
 </html>
