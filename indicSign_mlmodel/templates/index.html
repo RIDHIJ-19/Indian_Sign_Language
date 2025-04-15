@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Language Recognition</title>
+    <style>
+        video {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+        }
+        #prediction {
+            font-size: 24px;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sign Language Recognition</h1>
+    <video id="webcam" autoplay></video>
+    <button id="startButton">Start</button>
+    <div id="prediction">Prediction: </div>
+
+    <script>
+        const videoElement = document.getElementById('webcam');
+        const startButton = document.getElementById('startButton');
+        const predictionElement = document.getElementById('prediction');
+
+        // Start the webcam feed
+        startButton.addEventListener('click', async () => {
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            videoElement.srcObject = stream;
+        });
+
+        // Capture a frame every second and send it to the backend
+        async function captureFrame() {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = videoElement.videoWidth;
+            canvas.height = videoElement.videoHeight;
+
+            context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+            const frameData = canvas.toDataURL('image/jpeg');
+
+            // Send frame to the backend and get prediction
+            const response = await fetch('/process_frame', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ image: frameData })
+            });
+
+            const result = await response.json();
+
+            if (result.prediction) {
+                predictionElement.textContent = "Prediction: " + result.prediction;
+            } else if (result.error) {
+                predictionElement.textContent = "Error: " + result.error;
+            }
+
+            setTimeout(captureFrame, 1000); // Capture every second
+        }
+
+        // Start capturing frames
+        captureFrame();
+    </script>
+</body>
+</html>
