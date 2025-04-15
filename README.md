@@ -36,6 +36,9 @@ LIVE DEMO: https://ridhi-sign-language-gemini.onrender.com
 
 
 YOUTUBE: https://www.youtube.com/watch?v=d3Ol355ZQiQ
+
+
+
 A cloud-powered solution leveraging the Gemini multimodal API to interpret ISL gestures.
 
 #### 📌 Highlights
