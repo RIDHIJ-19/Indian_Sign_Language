@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='UTF-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+
+
+<style>
+
+body,html{
+    height:100%;
+    margin:0;
+    font-size:16px;
+    font-family:'Times New Roman', Times, serif;
+    font-weight:400;
+    line-height:1.8em;
+    color:#666;
+    overflow-x: hidden;
+}
+
+#pg1, #pg2, #pg3, #pg4{
+    position:relative;
+    opacity:0.90;
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
+  
+   
+    background-attachment:fixed;
+}
+#pg1 {
+    background-image: url("/static/img5.png");
+    min-height: 100%;
+}
+
+#pg2 {
+    background-image: url("/static/output.jpg");
+    min-height: 100%;
+}
+
+#pg3 {
+    background-image: url("/static/img4.jpg");
+    min-height: 100%;
+}
+
+#pg4 {
+    background-image: url("/static/img3.jpg");
+    min-height: 100%;
+}
+
+
+section{
+    text-align:center;
+  padding:50px 80px;
+  
+  background-color:#220f2f;
+  
+}
+body {
+    background-color: black;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #form {
+    padding: 40px;
+    max-width: 500px;
+    margin-left: 60px; /* Adjust this for spacing from the left */
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+  }
+  
+  #form label {
+    display: block;
+    margin-bottom: 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    text-align: left;
+  }
+  
+  #form input[type="text"],
+  #form input[type="email"],
+  #form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    color: white;
+    border-radius: 8px;
+    font-size: 16px;
+    outline: none;
+    text-align: left;
+  }
+  
+  #form textarea {
+    height: 120px;
+    resize: vertical;
+  }
+  
+  #form input::placeholder,
+  #form textarea::placeholder {
+    color: #aaa;
+  }
+  
+  #form button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    font-size: 16px;
+    color: white;
+    border-radius: 10px;
+    background: linear-gradient(45deg, #ff69b4, #8a2be2);
+    box-shadow: 0 0 15px rgba(255, 105, 180, 0.6),
+                0 0 25px rgba(138, 43, 226, 0.6);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
+  }
+  
+  #form button[type="submit"]:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.9),
+                0 0 30px rgba(138, 43, 226, 0.9);
+  }
+  
+#dark_section{
+    
+    background-color:#000000;
+    background-blend-mode: lighten;
+    color:rgb(255, 255, 255);
+
+    opacity: 1;
+    
+      
+}
+
+#text{
+  position:absolute;
+  top:50%;
+  width:100%;
+  text-align:center;
+  color:#000;
+  font-size:27px;
+  letter-spacing:12px;
+  text-transform:uppercase;
+  font-weight:bolder;
+}
+#text{
+    background-color:#111;
+  color:#fff;
+  padding:20px;
+  
+    background-color:transparent;
+}
+
+#text:hover{
+    font-size: 28px;
+    cursor: pointer;
+}
+
+
+img{
+    width: 30%;
+    height: 30%;
+    padding: 120px;
+}
+
+#main{
+    position:absolute;
+   top:30%;
+   width:100%;
+   right: 10%;
+  text-align:center;
+  color: rgb(232, 218, 218);
+  font-size:120px;
+  letter-spacing:10px;
+  text-transform:uppercase;
+  font-weight:bolder;
+  text-shadow: 5px 5px 3px #dd63dd;
+}
+
+
+
+
+#main:hover{
+    cursor:pointer;
+    font-size: 125px;
+}
+  
+#startButton {
+    padding: 12px 24px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(45deg, #ff00cc, #3333ff);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff00cc, 0 0 40px #3333ff, 0 0 60px #ff00cc;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+#startButton:hover {
+    box-shadow: 0 0 25px #ff00cc, 0 0 50px #3333ff, 0 0 75px #ff00cc;
+    transform: scale(1.05);
+}
+
+
+  #prediction {
+    display: none;
+    font-size: 20px;
+    color: white;
+    margin-top: 10px;
+  }
+
+
+</style>
+
+<title> IndicSign</title>
+</head>
+
+
+<body>
+
+    
+    <div id="pg1">
+       
+        <h2 id="main"> IndicSign</h2>
+        </a>
+    </div>
+
+   
+    <section id="dark_section"> 
+        <P><B>IndicSign</B> is a gesture recognition system that uses the <B>Gemini API</B> for multimodal understanding to translate Indian Sign Language (ISL) gestures into readable text. Combining computer vision and machine learning, it enables real-time, inclusive communication for the hearing and speech impaired, promoting accessibility and empathy across everyday and educational settings.</P>
+        <h2 style="font-family: 'Cursive'; color: white; text-shadow: 0 0 8px #b95e84, 0 0 16px #d1bfff; font-style: italic;">
+            "When hands speak, and machines listen — understanding becomes universal."
+          </h2>
+          
+    </section>
+
+
+    <div id="pg2">
+        <div id="text">
+            <span>
+                LIVE DEMO
+            </span>
+        </div>
+    </div>
+
+    <section id="dark_section">
+        <body>
+            <h1>Sign Language Recognition</h1>
+            <video id="webcam" autoplay></video>
+            <button id="startButton">Start</button>
+            <div id="prediction">Prediction: </div>
+        
+            <script>
+                let videoElement = document.getElementById("webcam");  // ✅ Fixed: matches the video tag ID
+                let predictionElement = document.getElementById("prediction");
+                let capturing = false;
+                 
+
+                function startCapture() {
+                         capturing = true;
+
+    // Hide the start button after it's pressed
+    document.getElementById("startButton").style.display = "none";
+
+    // Show the prediction div
+    document.getElementById("prediction").style.display = "block";
+
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            videoElement.srcObject = stream;
+            videoElement.play();
+
+            videoElement.onloadedmetadata = () => {
+                setTimeout(captureFrame, 1000); 
+            };
+        })
+        .catch(err => {
+            console.error("Camera access error:", err);
+            predictionElement.textContent = "Camera access denied.";
+        });
+}
+
+                 
+        
+                async function captureFrame() {
+                    if (!capturing) return;
+        
+                    const canvas = document.createElement('canvas');
+                    canvas.width = videoElement.videoWidth;
+                    canvas.height = videoElement.videoHeight;
+                    const context = canvas.getContext('2d');
+        
+                    context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+                    const frameData = canvas.toDataURL('image/jpeg');
+        
+                    if (!frameData || frameData.length < 100) {
+                        console.error("⚠️ Frame capture failed.");
+                        predictionElement.textContent = "Frame capture failed.";
+                        setTimeout(captureFrame, 1000);
+                        return;
+                    }
+        
+                    try {
+                        const response = await fetch('/process_frame', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ image: frameData })
+                        });
+        
+                        const result = await response.json();
+                        predictionElement.textContent = "Prediction: " + result.prediction;
+                    } catch (err) {
+                        console.error("Error sending frame:", err);
+                        predictionElement.textContent = "Network error.";
+                    }
+        
+                    setTimeout(captureFrame, 1000); // Loop every second
+                }
+        
+                document.getElementById("startButton").addEventListener("click", startCapture);  // ✅ Fixed: button ID
+            </script>
+        </body>
+    
+        
+    </section>
+
+    <div id="pg3">
+        <div id="text">
+            <span>
+                Feedback & Suggestions
+            </span>
+        </div>
+    </div>
+
+    <section id="dark_section">
+        <section id="form">
+            <form action="https://api.web3forms.com/submit" method="POST">
+          
+              <input type="hidden" name="access_key" value="fe2c39fd-4ecb-44b3-9f71-a3944c5d92d8">
+          
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" required>
+          
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" required>
+          
+              <label for="message">Message</label>
+              <textarea name="message" id="message" required></textarea>
+          
+              <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+          
+              <button type="submit">Submit Form</button>
+          
+            </form>
+          </section>
+          
+    </section>
+
+    <div id="pg4">
+        <div id="text">
+             
+            <span>
+                THANK YOU
+            </span>     
+        </a>     
+           
+        </div>
+        
+
+    </div>
+
+    
+
+    
+
+
+
+</body>
+</html>

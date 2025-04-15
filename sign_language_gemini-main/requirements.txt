@@ -1,0 +1,10 @@
+﻿Flask
+opencv-python
+mediapipe
+numpy
+scikit-learn
+requests
+dotenv
+gunicorn
+
+#.venv/Scripts/activate
