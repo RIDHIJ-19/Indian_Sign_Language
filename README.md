@@ -1,4 +1,4 @@
-# 🇮🇳 Indian Sign Language Recognition
+# Indian Sign Language Recognition
 
 A dual-version project aimed at recognizing Indian Sign Language (ISL) hand gestures in real time. This system is built to promote accessibility and foster inclusive communication by translating ISL gestures into text.
 
